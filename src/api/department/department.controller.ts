@@ -17,7 +17,8 @@ import { PageDecorator } from '../../decorator/page.decorator';
 import { ApiExtraModels, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { ApiPaginatedResponse } from '../../decorator/api.paginated.response';
 import { Department } from './entities/department.entity';
-import { pagination } from '../../utils/response';
+import { error, pagination, success } from '../../utils/response';
+import { ApiMapResponse } from '../../decorator/api.map.response';
 
 @ApiTags('department')
 @ApiExtraModels(Department)
@@ -69,8 +70,21 @@ export class DepartmentController {
     return this.departmentService.update(+id, updateDepartmentDto);
   }
 
+  @ApiOperation({
+    summary: '删除部门',
+    operationId: 'deleteDepartment',
+  })
+  @ApiMapResponse()
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.departmentService.remove(+id);
+  async remove(@Param('id', ParseIntPipe) id: number) {
+    const department = await this.departmentService.findOne(id);
+    if (department === null) {
+      return error('部门不存在');
+    }
+    const { affected } = await this.departmentService.remove(+id);
+    if (affected) {
+      return success();
+    }
+    return error('删除失败');
   }
 }

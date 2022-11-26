@@ -42,7 +42,7 @@ export class DepartmentService {
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} department`;
+    return this.departmentRepository.findOne({ where: { id } });
   }
 
   update(id: number, updateDepartmentDto: UpdateDepartmentDto) {
@@ -50,6 +50,6 @@ export class DepartmentService {
   }
 
   remove(id: number) {
-    return `This action removes a #${id} department`;
+    return this.departmentRepository.softDelete(id);
   }
 }
