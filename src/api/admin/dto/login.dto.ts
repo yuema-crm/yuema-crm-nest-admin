@@ -22,8 +22,9 @@ export class LoginDto {
   password: string;
   @ApiProperty({
     name: 'type',
-    description: '登录类型',
-    enum: ['account', 'mobile'],
+    description: '登录类型：account或者mobile',
+    default: 'account',
+    example: 'account',
   })
   @Length(6, 12, { message: '登录类型' })
   type: string;

@@ -6,6 +6,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { JwtStrategy } from './auth/jwt.strategy';
 import { APP_GUARD } from '@nestjs/core';
 import { JwtAuthGuard } from './auth/jwt-auth.guard';
+import { DepartmentModule } from './api/department/department.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { JwtAuthGuard } from './auth/jwt-auth.guard';
       password: '12345678',
       database: 'yuema-crm',
       entities: [],
+      // logging: true,
       autoLoadEntities: true,
       synchronize: true,
     }),
@@ -25,6 +27,7 @@ import { JwtAuthGuard } from './auth/jwt-auth.guard';
       ttl: 300 * 1000, // 300 seconds
     }),
     AdminModule,
+    DepartmentModule,
   ],
   controllers: [AppController],
   providers: [

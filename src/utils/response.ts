@@ -13,13 +13,13 @@ export const error = (message = 'error', data = {}) => {
   };
 };
 export function pagination<T>(
-  list: T[],
+  data: T[],
   total: number,
   current = 1,
   pageSize = 15,
 ) {
   return {
-    list,
+    data,
     pageSize,
     total,
     totalPage: Math.ceil(total / pageSize),
